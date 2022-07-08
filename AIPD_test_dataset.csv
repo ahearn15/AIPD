@@ -1,8 +1,8 @@
-gov_short,gov_long,Ev.Comp.,Hardware,Knowledge,ML,NLP,Planning,Speech,Vision
-DoD,Department of Defense,9,492,1470,414,34,417,53,620
-DoE,Department of Energy,8,166,618,143,1,230,18,238
-HHS,Department of Health and Human Services,22,49,1009,510,5,120,13,842
-NASA,National Aeronautics and Space Administration,2,29,173,36,1,61,2,67
-NSF,National Science Foundation,8,145,605,152,8,141,13,274
-Other,Other Agency,6,49,313,60,6,106,9,126
-USGov,United States Government,5,105,529,134,8,161,16,240
+gov_short,gov_long,Ev.Comp.,Hardware,Knowledge,ML,NLP,Planning,Speech,Vision,Non-AI
+DoD,Department of Defense,9,492,1470,414,34,417,53,620,22563
+DoE,Department of Energy,8,166,618,143,1,230,18,238,19997
+HHS,Department of Health and Human Services,22,49,1009,510,5,120,13,842,28819
+NASA,National Aeronautics and Space Administration,2,29,173,36,1,61,2,67,3614
+NSF,National Science Foundation,8,145,605,152,8,141,13,274,8495
+Other,Other Agency,6,49,313,60,6,106,9,126,5849
+USGov,United States Government,5,105,529,134,8,161,16,240,15524
