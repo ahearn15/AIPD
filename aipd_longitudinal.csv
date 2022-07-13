@@ -1,177 +1,186 @@
-year,govgroup,patents
-1990,Department of Defense,17
-1990,Department of Energy,5
-1990,Department of Health and Human Services,4
-1990,National Aeronautics and Space Administration,5
-1990,National Science Foundation,3
-1991,Department of Defense,11
-1991,Department of Energy,5
-1991,Department of Health and Human Services,7
-1991,National Aeronautics and Space Administration,9
-1991,National Science Foundation,1
-1992,Department of Defense,17
-1992,Department of Energy,7
-1992,Department of Health and Human Services,12
-1992,National Aeronautics and Space Administration,9
-1992,National Science Foundation,4
-1993,Department of Defense,24
-1993,Department of Energy,8
-1993,Department of Health and Human Services,9
-1993,National Aeronautics and Space Administration,11
-1993,National Science Foundation,3
-1994,Department of Commerce,3
-1994,Department of Defense,35
-1994,Department of Energy,3
-1994,Department of Health and Human Services,21
-1994,National Aeronautics and Space Administration,12
-1994,National Science Foundation,4
-1995,Department of Defense,21
-1995,Department of Energy,9
-1995,Department of Health and Human Services,14
-1995,National Aeronautics and Space Administration,5
-1995,National Science Foundation,5
-1996,Department of Defense,36
-1996,Department of Energy,18
-1996,Department of Health and Human Services,27
-1996,National Aeronautics and Space Administration,9
-1996,National Science Foundation,13
-1997,Department of Commerce,1
-1997,Department of Defense,31
-1997,Department of Energy,23
-1997,Department of Health and Human Services,28
-1997,National Aeronautics and Space Administration,9
-1997,National Science Foundation,8
-1998,Department of Commerce,2
-1998,Department of Defense,42
-1998,Department of Energy,26
-1998,Department of Health and Human Services,45
-1998,National Aeronautics and Space Administration,11
-1998,National Science Foundation,13
-1999,Department of Commerce,6
-1999,Department of Defense,56
-1999,Department of Energy,32
-1999,Department of Health and Human Services,33
-1999,National Aeronautics and Space Administration,7
-1999,National Science Foundation,15
-2000,Department of Commerce,8
-2000,Department of Defense,45
-2000,Department of Energy,20
-2000,Department of Health and Human Services,48
-2000,National Aeronautics and Space Administration,10
-2000,National Science Foundation,16
-2001,Department of Defense,3
-2001,Department of Health and Human Services,6
-2001,National Science Foundation,1
-2002,Department of Commerce,11
-2002,Department of Defense,57
-2002,Department of Energy,42
-2002,Department of Health and Human Services,59
-2002,National Aeronautics and Space Administration,9
-2002,National Science Foundation,22
-2003,Department of Commerce,9
-2003,Department of Defense,65
-2003,Department of Energy,35
-2003,Department of Health and Human Services,74
-2003,National Aeronautics and Space Administration,12
-2003,National Science Foundation,28
-2004,Department of Commerce,16
-2004,Department of Defense,104
-2004,Department of Energy,48
-2004,Department of Health and Human Services,55
-2004,National Aeronautics and Space Administration,21
-2004,National Science Foundation,30
-2005,Department of Commerce,2
-2005,Department of Defense,37
-2005,Department of Energy,8
-2005,Department of Health and Human Services,19
-2005,National Aeronautics and Space Administration,4
-2005,National Science Foundation,13
-2006,Department of Commerce,3
-2006,Department of Defense,58
-2006,Department of Energy,27
-2006,Department of Health and Human Services,30
-2006,National Aeronautics and Space Administration,4
-2006,National Science Foundation,27
-2007,Department of Commerce,5
-2007,Department of Defense,41
-2007,Department of Energy,33
-2007,Department of Health and Human Services,44
-2007,National Aeronautics and Space Administration,7
-2007,National Science Foundation,19
-2008,Department of Commerce,4
-2008,Department of Defense,56
-2008,Department of Energy,24
-2008,Department of Health and Human Services,55
-2008,National Aeronautics and Space Administration,7
-2008,National Science Foundation,28
-2009,Department of Commerce,2
-2009,Department of Defense,88
-2009,Department of Energy,23
-2009,Department of Health and Human Services,47
-2009,National Aeronautics and Space Administration,11
-2009,National Science Foundation,23
-2010,Department of Defense,110
-2010,Department of Energy,39
-2010,Department of Health and Human Services,75
-2010,National Aeronautics and Space Administration,7
-2010,National Science Foundation,44
-2011,Department of Commerce,8
-2011,Department of Defense,137
-2011,Department of Energy,40
-2011,Department of Health and Human Services,70
-2011,National Aeronautics and Space Administration,13
-2011,National Science Foundation,48
-2012,Department of Commerce,6
-2012,Department of Defense,169
-2012,Department of Energy,44
-2012,Department of Health and Human Services,81
-2012,National Aeronautics and Space Administration,18
-2012,National Science Foundation,60
-2013,Department of Commerce,10
-2013,Department of Defense,169
-2013,Department of Energy,69
-2013,Department of Health and Human Services,128
-2013,National Aeronautics and Space Administration,14
-2013,National Science Foundation,63
-2014,Department of Commerce,2
-2014,Department of Defense,177
-2014,Department of Energy,50
-2014,Department of Health and Human Services,120
-2014,National Aeronautics and Space Administration,9
-2014,National Science Foundation,66
-2015,Department of Commerce,3
-2015,Department of Defense,163
-2015,Department of Energy,65
-2015,Department of Health and Human Services,115
-2015,National Aeronautics and Space Administration,13
-2015,National Science Foundation,84
-2016,Department of Commerce,3
-2016,Department of Defense,154
-2016,Department of Energy,58
-2016,Department of Health and Human Services,143
-2016,National Aeronautics and Space Administration,11
-2016,National Science Foundation,79
-2017,Department of Commerce,5
-2017,Department of Defense,184
-2017,Department of Energy,64
-2017,Department of Health and Human Services,183
-2017,National Aeronautics and Space Administration,7
-2017,National Science Foundation,82
-2018,Department of Commerce,4
-2018,Department of Defense,192
-2018,Department of Energy,76
-2018,Department of Health and Human Services,191
-2018,National Aeronautics and Space Administration,10
-2018,National Science Foundation,76
-2019,Department of Commerce,20
-2019,Department of Defense,576
-2019,Department of Energy,256
-2019,Department of Health and Human Services,377
-2019,National Aeronautics and Space Administration,27
-2019,National Science Foundation,237
-2020,Department of Commerce,19
-2020,Department of Defense,546
-2020,Department of Energy,231
-2020,Department of Health and Human Services,425
-2020,National Aeronautics and Space Administration,33
-2020,National Science Foundation,205
+year,govgroup,all_patents,ai_patents,prop_ai
+1990,Department of Commerce,5,0,0.0
+1990,Department of Defense,262,17,0.0648854961832061
+1990,Department of Energy,223,5,0.02242152466367713
+1990,Department of Health and Human Services,157,4,0.025477707006369428
+1990,National Aeronautics and Space Administration,78,5,0.0641025641025641
+1990,National Science Foundation,32,3,0.09375
+1991,Department of Commerce,1,0,0.0
+1991,Department of Defense,283,11,0.038869257950530034
+1991,Department of Energy,265,5,0.018867924528301886
+1991,Department of Health and Human Services,182,7,0.038461538461538464
+1991,National Aeronautics and Space Administration,96,9,0.09375
+1991,National Science Foundation,36,1,0.027777777777777776
+1992,Department of Commerce,7,0,0.0
+1992,Department of Defense,326,17,0.05214723926380368
+1992,Department of Energy,344,7,0.020348837209302327
+1992,Department of Health and Human Services,254,12,0.047244094488188976
+1992,National Aeronautics and Space Administration,93,9,0.0967741935483871
+1992,National Science Foundation,60,4,0.06666666666666667
+1993,Department of Commerce,5,0,0.0
+1993,Department of Defense,291,24,0.08247422680412371
+1993,Department of Energy,322,8,0.024844720496894408
+1993,Department of Health and Human Services,311,9,0.028938906752411574
+1993,National Aeronautics and Space Administration,105,11,0.10476190476190476
+1993,National Science Foundation,71,3,0.04225352112676056
+1994,Department of Commerce,19,3,0.15789473684210525
+1994,Department of Defense,305,35,0.11475409836065574
+1994,Department of Energy,392,3,0.007653061224489796
+1994,Department of Health and Human Services,288,21,0.07291666666666667
+1994,National Aeronautics and Space Administration,107,12,0.11214953271028037
+1994,National Science Foundation,79,4,0.05063291139240506
+1995,Department of Commerce,10,0,0.0
+1995,Department of Defense,259,21,0.08108108108108109
+1995,Department of Energy,380,9,0.02368421052631579
+1995,Department of Health and Human Services,345,14,0.04057971014492753
+1995,National Aeronautics and Space Administration,82,5,0.06097560975609756
+1995,National Science Foundation,90,5,0.05555555555555555
+1996,Department of Commerce,17,0,0.0
+1996,Department of Defense,265,36,0.13584905660377358
+1996,Department of Energy,355,18,0.05070422535211268
+1996,Department of Health and Human Services,519,27,0.05202312138728324
+1996,National Aeronautics and Space Administration,57,9,0.15789473684210525
+1996,National Science Foundation,105,13,0.12380952380952381
+1997,Department of Commerce,17,1,0.058823529411764705
+1997,Department of Defense,352,31,0.08806818181818182
+1997,Department of Energy,356,23,0.06460674157303371
+1997,Department of Health and Human Services,677,28,0.0413589364844904
+1997,National Aeronautics and Space Administration,64,9,0.140625
+1997,National Science Foundation,129,8,0.06201550387596899
+1998,Department of Commerce,54,2,0.037037037037037035
+1998,Department of Defense,453,42,0.09271523178807947
+1998,Department of Energy,559,26,0.046511627906976744
+1998,Department of Health and Human Services,891,45,0.050505050505050504
+1998,National Aeronautics and Space Administration,87,11,0.12643678160919541
+1998,National Science Foundation,168,13,0.07738095238095238
+1999,Department of Commerce,45,6,0.13333333333333333
+1999,Department of Defense,521,56,0.10748560460652591
+1999,Department of Energy,587,32,0.054514480408858604
+1999,Department of Health and Human Services,874,33,0.03775743707093822
+1999,National Aeronautics and Space Administration,84,7,0.08333333333333333
+1999,National Science Foundation,174,15,0.08620689655172414
+2000,Department of Commerce,68,8,0.11764705882352941
+2000,Department of Defense,517,45,0.08704061895551257
+2000,Department of Energy,553,20,0.03616636528028933
+2000,Department of Health and Human Services,869,48,0.05523590333716916
+2000,National Aeronautics and Space Administration,89,10,0.11235955056179775
+2000,National Science Foundation,162,16,0.09876543209876543
+2001,Department of Defense,25,3,0.12
+2001,Department of Energy,22,0,0.0
+2001,Department of Health and Human Services,72,6,0.08333333333333333
+2001,National Aeronautics and Space Administration,3,0,0.0
+2001,National Science Foundation,11,1,0.09090909090909091
+2002,Department of Commerce,74,11,0.14864864864864866
+2002,Department of Defense,683,57,0.08345534407027819
+2002,Department of Energy,754,42,0.05570291777188329
+2002,Department of Health and Human Services,884,59,0.0667420814479638
+2002,National Aeronautics and Space Administration,119,9,0.07563025210084033
+2002,National Science Foundation,186,22,0.11827956989247312
+2003,Department of Commerce,116,9,0.07758620689655173
+2003,Department of Defense,722,65,0.09002770083102493
+2003,Department of Energy,698,35,0.050143266475644696
+2003,Department of Health and Human Services,853,74,0.08675263774912075
+2003,National Aeronautics and Space Administration,118,12,0.1016949152542373
+2003,National Science Foundation,258,28,0.10852713178294573
+2004,Department of Commerce,93,16,0.17204301075268819
+2004,Department of Defense,786,104,0.13231552162849872
+2004,Department of Energy,736,48,0.06521739130434782
+2004,Department of Health and Human Services,837,55,0.06571087216248507
+2004,National Aeronautics and Space Administration,122,21,0.1721311475409836
+2004,National Science Foundation,241,30,0.12448132780082988
+2005,Department of Commerce,42,2,0.047619047619047616
+2005,Department of Defense,379,37,0.09762532981530343
+2005,Department of Energy,278,8,0.02877697841726619
+2005,Department of Health and Human Services,405,19,0.04691358024691358
+2005,National Aeronautics and Space Administration,43,4,0.09302325581395349
+2005,National Science Foundation,137,13,0.0948905109489051
+2006,Department of Commerce,67,3,0.04477611940298507
+2006,Department of Defense,438,58,0.1324200913242009
+2006,Department of Energy,375,27,0.072
+2006,Department of Health and Human Services,553,30,0.054249547920433995
+2006,National Aeronautics and Space Administration,46,4,0.08695652173913043
+2006,National Science Foundation,168,27,0.16071428571428573
+2007,Department of Commerce,68,5,0.07352941176470588
+2007,Department of Defense,453,41,0.09050772626931568
+2007,Department of Energy,348,33,0.09482758620689655
+2007,Department of Health and Human Services,604,44,0.0728476821192053
+2007,National Aeronautics and Space Administration,49,7,0.14285714285714285
+2007,National Science Foundation,201,19,0.0945273631840796
+2008,Department of Commerce,56,4,0.07142857142857142
+2008,Department of Defense,456,56,0.12280701754385964
+2008,Department of Energy,333,24,0.07207207207207207
+2008,Department of Health and Human Services,577,55,0.09532062391681109
+2008,National Aeronautics and Space Administration,47,7,0.14893617021276595
+2008,National Science Foundation,194,28,0.14432989690721648
+2009,Department of Commerce,53,2,0.03773584905660377
+2009,Department of Defense,588,88,0.14965986394557823
+2009,Department of Energy,340,23,0.06764705882352941
+2009,Department of Health and Human Services,680,47,0.06911764705882353
+2009,National Aeronautics and Space Administration,63,11,0.1746031746031746
+2009,National Science Foundation,218,23,0.10550458715596331
+2010,Department of Commerce,67,0,0.0
+2010,Department of Defense,705,110,0.15602836879432624
+2010,Department of Energy,447,39,0.087248322147651
+2010,Department of Health and Human Services,964,75,0.07780082987551867
+2010,National Aeronautics and Space Administration,84,7,0.08333333333333333
+2010,National Science Foundation,302,44,0.1456953642384106
+2011,Department of Commerce,58,8,0.13793103448275862
+2011,Department of Defense,823,137,0.16646415552855406
+2011,Department of Energy,471,40,0.08492569002123142
+2011,Department of Health and Human Services,942,70,0.07430997876857749
+2011,National Aeronautics and Space Administration,76,13,0.17105263157894737
+2011,National Science Foundation,330,48,0.14545454545454545
+2012,Department of Commerce,68,6,0.08823529411764706
+2012,Department of Defense,930,169,0.1817204301075269
+2012,Department of Energy,536,44,0.08208955223880597
+2012,Department of Health and Human Services,1132,81,0.0715547703180212
+2012,National Aeronautics and Space Administration,93,18,0.1935483870967742
+2012,National Science Foundation,363,60,0.1652892561983471
+2013,Department of Commerce,70,10,0.14285714285714285
+2013,Department of Defense,903,169,0.18715393133997785
+2013,Department of Energy,681,69,0.1013215859030837
+2013,Department of Health and Human Services,1282,128,0.0998439937597504
+2013,National Aeronautics and Space Administration,85,14,0.16470588235294117
+2013,National Science Foundation,440,63,0.1431818181818182
+2014,Department of Commerce,40,2,0.05
+2014,Department of Defense,960,177,0.184375
+2014,Department of Energy,686,50,0.0728862973760933
+2014,Department of Health and Human Services,1388,120,0.08645533141210375
+2014,National Aeronautics and Space Administration,88,9,0.10227272727272728
+2014,National Science Foundation,476,66,0.13865546218487396
+2015,Department of Commerce,53,3,0.05660377358490566
+2015,Department of Defense,873,163,0.18671248568155785
+2015,Department of Energy,743,65,0.08748317631224764
+2015,Department of Health and Human Services,1432,115,0.08030726256983241
+2015,National Aeronautics and Space Administration,91,13,0.14285714285714285
+2015,National Science Foundation,467,84,0.17987152034261242
+2016,Department of Commerce,47,3,0.06382978723404255
+2016,Department of Defense,977,154,0.15762538382804503
+2016,Department of Energy,801,58,0.07240948813982521
+2016,Department of Health and Human Services,1508,143,0.09482758620689655
+2016,National Aeronautics and Space Administration,88,11,0.125
+2016,National Science Foundation,530,79,0.1490566037735849
+2017,Department of Commerce,70,5,0.07142857142857142
+2017,Department of Defense,1165,184,0.15793991416309014
+2017,Department of Energy,773,64,0.08279430789133248
+2017,Department of Health and Human Services,1839,183,0.09951060358890701
+2017,National Aeronautics and Space Administration,92,7,0.07608695652173914
+2017,National Science Foundation,569,82,0.14411247803163443
+2018,Department of Commerce,64,4,0.0625
+2018,Department of Defense,1152,192,0.16666666666666666
+2018,Department of Energy,780,76,0.09743589743589744
+2018,Department of Health and Human Services,1849,191,0.1032990805840995
+2018,National Aeronautics and Space Administration,84,10,0.11904761904761904
+2018,National Science Foundation,602,76,0.12624584717607973
+2019,Department of Commerce,185,20,0.10810810810810811
+2019,Department of Defense,3213,576,0.1792717086834734
+2019,Department of Energy,2293,256,0.11164413432184911
+2019,Department of Health and Human Services,3415,377,0.11039531478770132
+2019,National Aeronautics and Space Administration,206,27,0.13106796116504854
+2019,National Science Foundation,1323,237,0.17913832199546487
+2020,Department of Commerce,115,19,0.16521739130434782
+2020,Department of Defense,2952,546,0.18495934959349594
+2020,Department of Energy,2179,231,0.10601193207893529
+2020,Department of Health and Human Services,3482,425,0.12205628948879954
+2020,National Aeronautics and Space Administration,236,33,0.13983050847457626
+2020,National Science Foundation,1308,205,0.15672782874617738
