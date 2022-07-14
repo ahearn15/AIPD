@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<svg class="container" height="50" id="titlesvg" width="900"><svg width="650" height="50"><text class="title" x="372.5" y="37">AI Patents by Government Agency, 2000-2020</text></svg></svg>
+<div class="container chart-buttons" height="50" id="buttons" width="900"><button onclick="update(view1)">View by #</button><button onclick="update(view2)">View by %</button></div>
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<!-- Create a div where the graph will take place -->
+<div id="titlesvg"></div>
+<div id="svg1"></div>
+<style type="text/css">
+    /* Style checkbox (default) */
+    .container input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        margin: 0px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        outline: 2.5px solid #f1d660;
+        border-radius: 1px;
+        font-size: 1em;
+        vertical-align: text-bottom;
+        line-height: 1em;
+        background: transparent;
+    }
+    /* Style checkbox (while checked) */
+    input[type='checkbox']:checked:after {
+        content: '\2713';
+        color: black;
+        position: absolute;
+        line-height: 1rem;
+        font-size: 2rem;
+    }
+    /* Style buttons (default) */
+    .container button {
+        appearance: none;
+        border: 1;
+        border-radius: 5px;
+        background: #f1d660;
+        border-color: #f1d660;
+        color: black;
+        padding: 4px;
+        font-size: 14px;
+        font-family: "Tinos", serif;
+    }
+    /* Style buttons (during click) */
+    .container button:active {
+        background: #fbf6db;
+        color: black;
+        border-color: #f1d660;
+    }
+    /* Style light grey vertical grid lines for line chart */
+    .grid line {
+        stroke: lightgrey;
+        stroke-opacity: 0.7;
+        shape-rendering: crispEdges;
+    }
+    /* Get rid of outer grid border for line chart */
+    .grid path {
+        stroke-width: 0;
+    }
+    /* Style tooltip */
+    .toolTip {
+        position: absolute;
+        background: #ffffff;
+        border: 1px solid #000000;
+        border-radius: 10px;
+        padding: 5px;
+        text-align: center;
+        font-family: "Tinos", serif;
+        display: none;
+    }
+    /* Style axis text */
+    .axis text {
+        font-family: "Tinos", serif;
+        fill: black;
+        vertical-align: center;
+        font-size: 12px;
+    }
+    /* General style attributes for all text labels */
+    .text {
+        font-family: "Tinos", serif;
+        fill: black;
+        vertical-align: center;
+    }
+    /* Style pie slice text */
+    .slicelabel {
+        font-size: 14px;
+        text-anchor: middle;
+    }
+    /* Style pie chart text */
+    .pielabel {
+        text-anchor: end;
+    }
+    /* Style legend labels */
+    .legendlabel {
+        font-size: 14px;
+        text-anchor: left;
+    }
+    /* Style axis titles */
+    .axislabel {
+        font-size: 18px;
+        text-anchor: middle;
+    }
+    /* Style title text */
+    .title {
+        font-size: 24px;
+        text-anchor: middle;
+    }
+</style>
+<script>
+    // Set chart margins 
+    // Set chart width/height vars by subtracting margins from dimensions of main svg container
+    var margin = {
+            top: 25,
+            right: 260,
+            bottom: 60,
+            left: 90
+        },
+        width = 975 - margin.left - margin.right,
+        height = 450 - margin.top - margin.bottom;
+    // Append title svg
+    var titlesvg = d3.select("#titlesvg")
+        .append("svg")
+        .attr("width", 650)
+        .attr("height", 50);
+    // Append main chart svg
+    var svg = d3.select("#svg1")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    // Append tooltip div
+    var tooltip = d3.select("body")
+        .append("div")
+        .attr("class", "toolTip");
+    // Define variables for each view/chart
+    var view1 = "lines";
+    var view2 = "pct";
+    // Define function to switch between views/charts
+    function update(view) {
+        // Clear existing chart and title content before switching
+        svg.selectAll("*").remove();
+        titlesvg.selectAll("*").remove();
+        // Create bar chart
+        if (view == "pct") {
+            // Reset data selection button
+            d3.selectAll("input").each(function(d) {
+                if (d3.select(this).attr("type") == "checkbox")
+                    d3.select(this).node().checked = false;
+            });
+            // Clear existing chart and title content before switching
+            svg.selectAll("*").remove();
+            titlesvg.selectAll("*").remove();
+            // Load data
+            d3.csv("https://raw.githubusercontent.com/ahearn15/AIPD/main/aipd_longitudinal.csv", function(data) {
+                // Define variables from input data
+                data.forEach(function(d) {
+                    d['Department of Defense'] = d.DoD_pct
+                    d['Department of Commerce'] = d.DoC_pct
+                    d['Department of Energy'] = d.DoE_pct
+                    d['Health and Human Services'] = d.HHS_pct
+                    d['NASA'] = d.NASA_pct
+                    d['National Science Foundation'] = d.NSF_pct
+                    d['Department of Commerce Total'] = d.DoC_Total
+                    d['Department of Defense Total'] = d.DoD_Total
+                    d['Department of Energy Total'] = d.DoE_Total
+                    d['Health and Human Services Total'] = d.HHS_Total
+                    d['NASA Total'] = d.NASA_Total
+                    d['National Science Foundation Total'] = d.NSF_Total
+                    d['Department of Commerce Non-AI'] = d.DoC_NonAI
+                    d['Department of Defense Non-AI'] = d.DoD_NonAI
+                    d['Department of Energy Non-AI'] = d.DoE_NonAI
+                    d['Health and Human Services Non-AI'] = d.HHS_NonAI
+                    d['NASA Non-AI'] = d.NASA_NonAI
+                    d['National Science Foundation Non-AI'] = d.NSF_NonAI
+                    //   d["Returning Men"] = d.Male_Returning;
+                    //   d["Returning Women"] = d.Female_Returning;
+                    //   d["Returning Total"] = d.Total_Returning;
+                    //   d["Returning Not Attributed"] = d.NotAttr_Returning;
+                    //   d["New Women"] = d.Female_New;
+                    //   d["New Men"] = d.Male_New;
+                    //   d["New Total"] = d.Total_New;
+                    //   d["New Not Attributed"] = d.NotAttr_New;
+                    //   d["Total"] = d.Gov_Total;
+                    //   d["Women"] = d.Female;
+                    //   d["Men"] = d.Male;
+                    //   d["Not Attributed"] = d.NotAttr;
+                });
+                // Define keys (one for each separate line in the chart)
+                var keys = [
+                    'Department of Commerce',
+                    "Department of Defense",
+                    "Department of Energy",
+                    "Health and Human Services",
+                    'NASA',
+                    'National Science Foundation',
+                ];
+                // Define color scale (one for each key/line)
+                var color = d3.scaleOrdinal()
+                    .domain(keys)
+                    .range(['#4f5e6f',
+                        '#7d93aa',
+                        '#66a6c2',
+                        '#9d2b05',
+                        '#df9b6c',
+                        '#f2d569'
+                    ]);
+                // Define x axis scale
+                var x = d3.scaleTime()
+                    .domain(d3.extent(data, function(d) {
+                        return d.year;
+                    }))
+                    .range([0, width]);
+                // Define function to draw vertical gridlines
+                function gridlines_vert() {
+                    return d3.axisBottom(x).ticks(data.length);
+                };
+                // Append vertical gridlines
+                svg.append("g")
+                    .attr("class", "grid")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(gridlines_vert()
+                        .tickSize(-height)
+                        .tickFormat("")
+                    );
+                // Append x axis
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")", "")
+                    .call(d3.axisBottom(x)
+                        .ticks(data.length)
+                        .tickFormat(d3.format("d")));
+                // Define y axis scale
+                var y = d3.scaleLinear()
+                    .domain([0, .2])
+                    .range([height, 0]);
+                // Append y axis
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(d3.axisLeft(y));
+                // Append chart title
+                titlesvg.append("text")
+                    .attr("class", "title")
+                    .attr("x", width / 2 + 60)
+                    .attr("y", 37)
+                    .text("AI Patents by Government Agency, 2000-2020");
+                // Append x axis title
+                svg.append("text")
+                    .attr("class", "axislabel")
+                    .attr("x", width / 2)
+                    .attr("y", height + 50)
+                    .text("Patent Grant Year");
+                // Append y axis title
+                svg.append("text")
+                    .attr("class", "axislabel")
+                    .attr("transform", "rotate(-90)")
+                    .attr("x", -height / 2)
+                    .attr("y", -70)
+                    .text("Share of Patents AI");
+                // Generate line and points for each key/variable
+                for (var i = 0; i < keys.length; i++)
+                {
+                    // Append line to chart
+                    svg.append("path")
+                        .datum(data)
+                        .style("fill", "none")
+                        .style("stroke-width", 2)
+                        .style("stroke", function(d) {
+                            return color(keys[i]);
+                        })
+                        .attr("d", d3.line()
+                            .x(function(d) {
+                                return x(d.year);
+                            })
+                            .y(function(d) {
+                                return y(d[keys[i]]);
+                            })
+                        );
+                        
+                    // svg.selectAll('path').attr("opacity", .2)
+
+                    // Append points to chart
+                    svg.selectAll("points")
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("fill", "white")
+                        .attr("stroke", function(d) {
+                            return color(keys[i]);
+                        })
+                        .attr("cx", function(d) {
+                            return x(d.year);
+                        })
+                        .attr("cy", function(d) {
+                            return y(d[keys[i]]);
+                        })
+                        .attr("r", 3)
+                        // Display tooltip and change color/size of point on mouseover
+                        .on("mouseover", function(d) {
+                            // Change color and size of data point
+                            d3.select(this)
+                                .attr("fill", d3.select(this).attr("stroke"))
+                                .attr("r", 7);
+                                
+                            // Get data for tooltip pie chart
+                            var ptYear = d.year;
+                            if (ptYear > 2010) {
+                                horiz_pos = -223
+                            } else {
+                                horiz_pos = 13
+                            }
+                            pie_init_data_vals = data.filter(function(d) {
+                                return d.year == ptYear;
+                            });
+                            //DoD
+                            pct_dod_ai = (100 * pie_init_data_vals["0"]["DoD_AI"] / pie_init_data_vals["0"].DoD_Total).toFixed(1)
+                            pct_dod_non_ai = (100.0 - pct_dod_ai).toFixed(1)
+                            //DoC
+                            pct_doc_ai = (100 * pie_init_data_vals["0"]["DoC_AI"] / pie_init_data_vals["0"].DoD_Total).toFixed(1)
+                            pct_doc_non_ai = (100.0 - pct_doc_ai).toFixed(1)
+                            //DoE
+                            pct_doe_ai = (100 * pie_init_data_vals["0"]["DoE_AI"] / pie_init_data_vals["0"].DoE_Total).toFixed(1)
+                            pct_doe_non_ai = (100.0 - pct_doe_ai).toFixed(1)
+                            //NSF
+                            pct_nsf_ai = (100 * pie_init_data_vals["0"]["NSF_AI"] / pie_init_data_vals["0"].NSF_Total).toFixed(1)
+                            pct_nsf_non_ai = (100.0 - pct_nsf_ai).toFixed(1)
+                            //HHS
+                            pct_hhs_ai = (100 * pie_init_data_vals["0"]["HHS_AI"] / pie_init_data_vals["0"].HHS_Total).toFixed(1)
+                            pct_hhs_non_ai = (100.0 - pct_hhs_ai).toFixed(1)
+                            //NASA
+                            pct_nasa_ai = (100 * pie_init_data_vals["0"]["NASA_AI"] / pie_init_data_vals["0"].NASA_Total).toFixed(1)
+                            pct_nasa_non_ai = (100.0 - pct_nasa_ai).toFixed(1)
+                            if (d3.select(this).attr("stroke") == color("Department of Defense")) {
+                                data_val_var1 = d.DoD_Total;
+                                data_label_var = "DoD Patents";
+                                data_val_var2 = d["DoD_AI"];
+                                data_val_var3 = d.DoD_Total - d["DoD_AI"]
+                                pie_init_data = {
+                                    AI: pct_dod_ai,
+                                    NAI: pct_dod_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#bec9d5", "#7d93aa"])
+                            } else if (d3.select(this).attr("stroke") == color("Health and Human Services")) {
+                                data_val_var1 = d.HHS_Total;
+                                data_label_var = "HHS Patents";
+                                data_val_var2 = d["HHS_AI"];
+                                data_val_var3 = d.HHS_Total - d["HHS_AI"]
+                                pie_init_data = {
+                                    AI: pct_hhs_ai,
+                                    NAI: pct_hhs_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#ce9582", "#9d2b05"])
+                            } else if (d3.select(this).attr("stroke") == color("Department of Energy")) {
+                                data_val_var1 = d.DoE_Total;
+                                data_label_var = "DoE Patents";
+                                data_val_var2 = d["DoE_AI"];
+                                data_val_var3 = d.DoE_Total - d["DoE_AI"]
+                                pie_init_data = {
+                                    AI: pct_doe_ai,
+                                    NAI: pct_doe_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#b3d3e1", "#66a6c2"])
+                            } else if (d3.select(this).attr("stroke") == color("National Science Foundation")) {
+                                data_val_var1 = d.NSF_Total;
+                                data_label_var = "NSF Patents";
+                                data_val_var2 = d["NSF_AI"];
+                                data_val_var3 = d.NSF_Total - d["NSF_AI"]
+                                pie_init_data = {
+                                    AI: pct_nsf_ai,
+                                    NAI: pct_nsf_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#f9eab4", "#f2d569"])
+                            } else if (d3.select(this).attr("stroke") == color("NASA")) {
+                                data_val_var1 = d.NASA_Total;
+                                data_label_var = "NASA Patents";
+                                data_val_var2 = d["NASA_AI"];
+                                data_val_var3 = d.NASA_Total - d["NASA_AI"]
+                                pie_init_data = {
+                                    AI: pct_nasa_ai,
+                                    NAI: pct_nasa_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#efcdb6", "#Df9b6c"])
+                            } else if (d3.select(this).attr("stroke") == color("Department of Commerce")) {
+                                data_val_var1 = d.DoD_Total;
+                                data_label_var = "DoC Patents";
+                                data_val_var2 = d["DoC_AI"];
+                                data_val_var3 = d.DoD_Total - d["DoC_AI"]
+                                pie_init_data = {
+                                    AI: pct_doc_ai,
+                                    NAI: pct_doc_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#a7afb7", "#4f5e6f"])
+                            } else if (d3.select(this).attr("stroke") == color("Women")) {
+                                data_val_var1 = d.Female;
+                                data_label_var = "Women Inventors";
+                                data_val_var2 = d["New Women"];
+                                data_val_var3 = d.Female - d["New Women"]
+                                vert_pos = -230
+                                pie_init_data = {
+                                    Returning: pct_female_returning,
+                                    New: pct_female_new
+                                };
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Returning", "New"])
+                                    .range(["#e09ea0", "rgb(196, 70, 75)"])
+                            } else if (d3.select(this).attr("stroke") == color("Total")) {
+                                data_val_var1 = d.Total;
+                                data_label_var = "Inventors";
+                                data_val_var2 = d["New Total"];
+                                data_val_var3 = d.Total - d["New Total"]
+                                pie_init_data = {
+                                    Returning: pct_total_returning,
+                                    New: pct_total_new
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Returning", "New"])
+                                    .range(["#fbf6db", "#f1d660"])
+                            } else {
+                                data_val_var1 = d.NotAttr;
+                                data_label_var = "Not Attributed<br>Inventors";
+                                data_val_var2 = d["New Not Attributed"];
+                                data_val_var3 = d.NotAttr - d["New Not Attributed"]
+                                pie_init_data = {
+                                    Returning: pct_notattr_returning,
+                                    New: pct_notattr_new
+                                };
+                                vert_pos = -250
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Returning", "New"])
+                                    .range(["lightgrey", "grey"])
+                            }
+                            // Initialize tooltip with title text (data variable and year)
+                            tooltip
+                                .html((data_label_var) + " in " + (d.year) + "<br>")
+                                .style("font-size", "18px")
+                            // Append svg for pie chart
+                            var tooltipSVG = tooltip
+                                .append("svg")
+                                .attr("width", 200)
+                                .attr("height", 200)
+                                .style("font-size", "12px");
+                            // Append label with data value
+                            tooltipSVG.append("text")
+                                .attr("class", "pie label")
+                                .attr("text-anchor", "middle")
+                                .attr("x", 100)
+                                .attr("y", 15)
+                                .text("N = " + d3.format(",")(data_val_var1));
+                            // Define variables for pie chart creation
+                            var pie = d3.pie()
+                                .value(function(d) {
+                                    return d.value;
+                                });
+                            var data_sliced = pie(d3.entries(pie_init_data));
+                            var arcGenerator = d3.arc()
+                                .innerRadius(0)
+                                .outerRadius("60");
+                            // Append pie chart to tooltip svg
+                            tooltipSVG.selectAll("pie")
+                                .data(data_sliced)
+                                .enter()
+                                .append("path")
+                                .attr("d", arcGenerator)
+                                .attr("class", "pie")
+                                .attr("transform", "translate(98,110)")
+                                .attr("stroke", "black")
+                                .attr("fill", function(d) {
+                                    return piecolor(d.data.key);
+                                })
+                                .style("stroke-width", "2px")
+                                .style("opacity", 0.85);
+                            // Append percentage labels to centers of pie slices
+                            tooltipSVG.selectAll("pie")
+                                .data(data_sliced)
+                                .enter()
+                                .append("text")
+                                .text(function(d) {
+                                    return d.data.value + "%";
+                                })
+                                .attr("class", "slicelabel")
+                                .attr("transform", function(d) {
+                                    var c = arcGenerator.centroid(d);
+                                    var x = c[0];
+                                    var y = c[1];
+                                    var h = Math.sqrt(x * x + y * y);
+                                    {
+                                        return "translate(" + (x / h * 32 + 95) + "," +
+                                            (y / h * 32 + 110) + ")";
+                                    }
+                                });
+                            // Append labels with variable names and values
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 45)
+                                .attr("y", 38)
+                                .text("AI");
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 55)
+                                .attr("y", 38)
+                                .attr("dy", "1.25em")
+                                .text("(" + d3.format(",")(data_val_var2) + ")");
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 183)
+                                .attr("y", 178)
+                                .text("Non-AI");
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 183)
+                                .attr("y", 178)
+                                .attr("dy", "1.25em")
+                                .text("(" + d3.format(",")(data_val_var3) + ")");
+                            // Display tooltip for selected point                     
+                            tooltip
+                                .style("display", "block")
+                                .style("top", (d3.event.pageY + vert_pos) + "px")
+                                .style("left", (d3.event.pageX + horiz_pos) + "px");
+                        })
+                        // Remove tooltip and restore point color/size on mouseout 
+                        .on("mouseout", function(d) {
+                            // Restore point color/size
+                            d3.select(this)
+                                .attr("fill", "white")
+                                .attr("r", 3);
+                            // Remove tooltip display
+                            tooltip
+                                .style("display", "none");
+                        });
+                };
+                // Create legend: append circles for each key/color
+                svg.selectAll("legendcircles")
+                    .data(keys)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", 655)
+                    .attr("cy", function(d, i) {
+                        return 252 + i * 25;
+                    })
+                    .attr("r", 7)
+                    .style("fill", function(d) {
+                        return color(d);
+                    });
+                // Create legend: append labels for each key/color
+                svg.selectAll("legendlabels")
+                    .data(keys)
+                    .enter()
+                    .append("text")
+                    .attr("class", "legendlabel")
+                    .attr("x", 670)
+                    .attr("y", function(d, i) {
+                        return 256 + i * 25;
+                    })
+                    .text(function(d) {
+                        return d;
+                    });
+            })
+        } else {
+            // Reset data selection button
+            d3.selectAll("input").each(function(d) {
+                if (d3.select(this).attr("type") == "checkbox")
+                    d3.select(this).node().checked = false;
+            });
+            // Clear existing chart and title content before switching
+            svg.selectAll("*").remove();
+            titlesvg.selectAll("*").remove();
+            // Load data
+            d3.csv("https://raw.githubusercontent.com/ahearn15/AIPD/main/aipd_longitudinal.csv", function(data) {
+                // Define variables from input data
+                data.forEach(function(d) {
+                    d['Department of Defense'] = d.DoD_AI
+                    d['Department of Commerce'] = d.DoC_AI
+                    d['Department of Energy'] = d.DoE_AI
+                    d['Health and Human Services'] = d.HHS_AI
+                    d['NASA'] = d.NASA_AI
+                    d['National Science Foundation'] = d.NSF_AI
+                    d['Department of Commerce Total'] = d.DoC_Total
+                    d['Department of Defense Total'] = d.DoD_Total
+                    d['Department of Energy Total'] = d.DoE_Total
+                    d['Health and Human Services Total'] = d.HHS_Total
+                    d['NASA Total'] = d.NASA_Total
+                    d['National Science Foundation Total'] = d.NSF_Total
+                    d['Department of Commerce Non-AI'] = d.DoC_NonAI
+                    d['Department of Defense Non-AI'] = d.DoD_NonAI
+                    d['Department of Energy Non-AI'] = d.DoE_NonAI
+                    d['Health and Human Services Non-AI'] = d.HHS_NonAI
+                    d['NASA Non-AI'] = d.NASA_NonAI
+                    d['National Science Foundation Non-AI'] = d.NSF_NonAI
+                    //   d["Returning Men"] = d.Male_Returning;
+                    //   d["Returning Women"] = d.Female_Returning;
+                    //   d["Returning Total"] = d.Total_Returning;
+                    //   d["Returning Not Attributed"] = d.NotAttr_Returning;
+                    //   d["New Women"] = d.Female_New;
+                    //   d["New Men"] = d.Male_New;
+                    //   d["New Total"] = d.Total_New;
+                    //   d["New Not Attributed"] = d.NotAttr_New;
+                    //   d["Total"] = d.Gov_Total;
+                    //   d["Women"] = d.Female;
+                    //   d["Men"] = d.Male;
+                    //   d["Not Attributed"] = d.NotAttr;
+                });
+                // Define keys (one for each separate line in the chart)
+                var keys = [
+                    'Department of Commerce',
+                    "Department of Defense",
+                    "Department of Energy",
+                    "Health and Human Services",
+                    'NASA',
+                    'National Science Foundation',
+                ];
+                // Define color scale (one for each key/line)
+                var color = d3.scaleOrdinal()
+                    .domain(keys)
+                    .range(['#4f5e6f',
+                        '#7d93aa',
+                        '#66a6c2',
+                        '#9d2b05',
+                        '#df9b6c',
+                        '#f2d569'
+                    ]);
+                // Define x axis scale
+                var x = d3.scaleTime()
+                    .domain(d3.extent(data, function(d) {
+                        return d.year;
+                    }))
+                    .range([0, width]);
+                // Define function to draw vertical gridlines
+                function gridlines_vert() {
+                    return d3.axisBottom(x).ticks(data.length);
+                };
+                // Append vertical gridlines
+                svg.append("g")
+                    .attr("class", "grid")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(gridlines_vert()
+                        .tickSize(-height)
+                        .tickFormat("")
+                    );
+                // Append x axis
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")", "")
+                    .call(d3.axisBottom(x)
+                        .ticks(data.length)
+                        .tickFormat(d3.format("d")));
+                // Define y axis scale
+                var y = d3.scaleLinear()
+                    .domain([0, 600])
+                    .range([height, 0]);
+                // Append y axis
+                svg.append("g")
+                    .attr("class", "y axis")
+                    .call(d3.axisLeft(y));
+                // Append chart title
+                titlesvg.append("text")
+                    .attr("class", "title")
+                    .attr("x", width / 2 + 60)
+                    .attr("y", 37)
+                    .text("AI Patents by Government Agency, 2000-2020");
+                // Append x axis title
+                svg.append("text")
+                    .attr("class", "axislabel")
+                    .attr("x", width / 2)
+                    .attr("y", height + 50)
+                    .text("Patent Grant Year");
+                // Append y axis title
+                svg.append("text")
+                    .attr("class", "axislabel")
+                    .attr("transform", "rotate(-90)")
+                    .attr("x", -height / 2)
+                    .attr("y", -70)
+                    .text("Number of AI Patents");
+                // Generate line and points for each key/variable
+                for (var i = 0; i < keys.length; i++)
+                {
+                    // Append line to chart
+                    svg.append("path")
+                        .datum(data)
+                        .style("fill", "none")
+                        .style("stroke-width", 2)
+                        .style("stroke", function(d) {
+                            return color(keys[i]);
+                        })
+                        .attr("d", d3.line()
+                            .x(function(d) {
+                                return x(d.year);
+                            })
+                            .y(function(d) {
+                                return y(d[keys[i]]);
+                            })
+                        );
+                    // Append points to chart
+                    svg.selectAll("points")
+                        .data(data)
+                        .enter()
+                        .append("circle")
+                        .attr("fill", "white")
+                        .attr("stroke", function(d) {
+                            return color(keys[i]);
+                        })
+                        .attr("cx", function(d) {
+                            return x(d.year);
+                        })
+                        .attr("cy", function(d) {
+                            return y(d[keys[i]]);
+                        })
+                        .attr("r", 3)
+                        // Display tooltip and change color/size of point on mouseover
+                        .on("mouseover", function(d) {
+                            // Change color and size of data point
+                            d3.select(this)
+                                .attr("fill", d3.select(this).attr("stroke"))
+                                .attr("r", 7);
+                            // Get data for tooltip pie chart
+                            var ptYear = d.year;
+                            if (ptYear > 2010) {
+                                horiz_pos = -223
+                            } else {
+                                horiz_pos = 13
+                            }
+                            pie_init_data_vals = data.filter(function(d) {
+                                return d.year == ptYear;
+                            });
+                            //DoD
+                            pct_dod_ai = (100 * pie_init_data_vals["0"]["DoD_AI"] / pie_init_data_vals["0"].DoD_Total).toFixed(1)
+                            pct_dod_non_ai = (100.0 - pct_dod_ai).toFixed(1)
+                            //DoC
+                            pct_doc_ai = (100 * pie_init_data_vals["0"]["DoC_AI"] / pie_init_data_vals["0"].DoD_Total).toFixed(1)
+                            pct_doc_non_ai = (100.0 - pct_doc_ai).toFixed(1)
+                            //DoE
+                            pct_doe_ai = (100 * pie_init_data_vals["0"]["DoE_AI"] / pie_init_data_vals["0"].DoE_Total).toFixed(1)
+                            pct_doe_non_ai = (100.0 - pct_doe_ai).toFixed(1)
+                            //NSF
+                            pct_nsf_ai = (100 * pie_init_data_vals["0"]["NSF_AI"] / pie_init_data_vals["0"].NSF_Total).toFixed(1)
+                            pct_nsf_non_ai = (100.0 - pct_nsf_ai).toFixed(1)
+                            //HHS
+                            pct_hhs_ai = (100 * pie_init_data_vals["0"]["HHS_AI"] / pie_init_data_vals["0"].HHS_Total).toFixed(1)
+                            pct_hhs_non_ai = (100.0 - pct_hhs_ai).toFixed(1)
+                            //NASA
+                            pct_nasa_ai = (100 * pie_init_data_vals["0"]["NASA_AI"] / pie_init_data_vals["0"].NASA_Total).toFixed(1)
+                            pct_nasa_non_ai = (100.0 - pct_nasa_ai).toFixed(1)
+                            if (d3.select(this).attr("stroke") == color("Department of Defense")) {
+                                data_val_var1 = d.DoD_Total;
+                                data_label_var = "DoD Patents";
+                                data_val_var2 = d["DoD_AI"];
+                                data_val_var3 = d.DoD_Total - d["DoD_AI"]
+                                pie_init_data = {
+                                    AI: pct_dod_ai,
+                                    NAI: pct_dod_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#bec9d5", "#7d93aa"])
+                            } else if (d3.select(this).attr("stroke") == color("Health and Human Services")) {
+                                data_val_var1 = d.HHS_Total;
+                                data_label_var = "HHS Patents";
+                                data_val_var2 = d["HHS_AI"];
+                                data_val_var3 = d.HHS_Total - d["HHS_AI"]
+                                pie_init_data = {
+                                    AI: pct_hhs_ai,
+                                    NAI: pct_hhs_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#ce9582", "#9d2b05"])
+                            } else if (d3.select(this).attr("stroke") == color("Department of Energy")) {
+                                data_val_var1 = d.DoE_Total;
+                                data_label_var = "DoE Patents";
+                                data_val_var2 = d["DoE_AI"];
+                                data_val_var3 = d.DoE_Total - d["DoE_AI"]
+                                pie_init_data = {
+                                    AI: pct_doe_ai,
+                                    NAI: pct_doe_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#b3d3e1", "#66a6c2"])
+                            } else if (d3.select(this).attr("stroke") == color("National Science Foundation")) {
+                                data_val_var1 = d.NSF_Total;
+                                data_label_var = "NSF Patents";
+                                data_val_var2 = d["NSF_AI"];
+                                data_val_var3 = d.NSF_Total - d["NSF_AI"]
+                                pie_init_data = {
+                                    AI: pct_nsf_ai,
+                                    NAI: pct_nsf_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#f9eab4", "#f2d569"])
+                            } else if (d3.select(this).attr("stroke") == color("NASA")) {
+                                data_val_var1 = d.NASA_Total;
+                                data_label_var = "NASA Patents";
+                                data_val_var2 = d["NASA_AI"];
+                                data_val_var3 = d.NASA_Total - d["NASA_AI"]
+                                pie_init_data = {
+                                    AI: pct_nasa_ai,
+                                    NAI: pct_nasa_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#efcdb6", "#Df9b6c"])
+                            } else if (d3.select(this).attr("stroke") == color("Department of Commerce")) {
+                                data_val_var1 = d.DoD_Total;
+                                data_label_var = "DoC Patents";
+                                data_val_var2 = d["DoC_AI"];
+                                data_val_var3 = d.DoD_Total - d["DoC_AI"]
+                                pie_init_data = {
+                                    AI: pct_doc_ai,
+                                    NAI: pct_doc_non_ai
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Non-AI", "AI"])
+                                    .range(["#a7afb7", "#4f5e6f"])
+                            } else if (d3.select(this).attr("stroke") == color("Women")) {
+                                data_val_var1 = d.Female;
+                                data_label_var = "Women Inventors";
+                                data_val_var2 = d["New Women"];
+                                data_val_var3 = d.Female - d["New Women"]
+                                vert_pos = -230
+                                pie_init_data = {
+                                    Returning: pct_female_returning,
+                                    New: pct_female_new
+                                };
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Returning", "New"])
+                                    .range(["#e09ea0", "rgb(196, 70, 75)"])
+                            } else if (d3.select(this).attr("stroke") == color("Total")) {
+                                data_val_var1 = d.Total;
+                                data_label_var = "Inventors";
+                                data_val_var2 = d["New Total"];
+                                data_val_var3 = d.Total - d["New Total"]
+                                pie_init_data = {
+                                    Returning: pct_total_returning,
+                                    New: pct_total_new
+                                };
+                                if (ptYear > 2013) {
+                                    vert_pos = -30
+                                } else if (ptYear > 2009 & ptYear < 2014) {
+                                    vert_pos = -80
+                                } else {
+                                    vert_pos = -120
+                                }
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Returning", "New"])
+                                    .range(["#fbf6db", "#f1d660"])
+                            } else {
+                                data_val_var1 = d.NotAttr;
+                                data_label_var = "Not Attributed<br>Inventors";
+                                data_val_var2 = d["New Not Attributed"];
+                                data_val_var3 = d.NotAttr - d["New Not Attributed"]
+                                pie_init_data = {
+                                    Returning: pct_notattr_returning,
+                                    New: pct_notattr_new
+                                };
+                                vert_pos = -250
+                                piecolor = d3.scaleOrdinal()
+                                    .domain(["Returning", "New"])
+                                    .range(["lightgrey", "grey"])
+                            }
+                            // Initialize tooltip with title text (data variable and year)
+                            tooltip
+                                .html((data_label_var) + " in " + (d.year) + "<br>")
+                                .style("font-size", "18px")
+                            // Append svg for pie chart
+                            var tooltipSVG = tooltip
+                                .append("svg")
+                                .attr("width", 200)
+                                .attr("height", 200)
+                                .style("font-size", "12px");
+                            // Append label with data value
+                            tooltipSVG.append("text")
+                                .attr("class", "pie label")
+                                .attr("text-anchor", "middle")
+                                .attr("x", 100)
+                                .attr("y", 15)
+                                .text("N = " + d3.format(",")(data_val_var1));
+                            // Define variables for pie chart creation
+                            var pie = d3.pie()
+                                .value(function(d) {
+                                    return d.value;
+                                });
+                            var data_sliced = pie(d3.entries(pie_init_data));
+                            var arcGenerator = d3.arc()
+                                .innerRadius(0)
+                                .outerRadius("60");
+                            // Append pie chart to tooltip svg
+                            tooltipSVG.selectAll("pie")
+                                .data(data_sliced)
+                                .enter()
+                                .append("path")
+                                .attr("d", arcGenerator)
+                                .attr("class", "pie")
+                                .attr("transform", "translate(98,110)")
+                                .attr("stroke", "black")
+                                .attr("fill", function(d) {
+                                    return piecolor(d.data.key);
+                                })
+                                .style("stroke-width", "2px")
+                                .style("opacity", 0.85);
+                            // Append percentage labels to centers of pie slices
+                            tooltipSVG.selectAll("pie")
+                                .data(data_sliced)
+                                .enter()
+                                .append("text")
+                                .text(function(d) {
+                                    return d.data.value + "%";
+                                })
+                                .attr("class", "slicelabel")
+                                .attr("transform", function(d) {
+                                    var c = arcGenerator.centroid(d);
+                                    var x = c[0];
+                                    var y = c[1];
+                                    var h = Math.sqrt(x * x + y * y);
+                                    {
+                                        return "translate(" + (x / h * 32 + 95) + "," +
+                                            (y / h * 32 + 110) + ")";
+                                    }
+                                });
+                            // Append labels with variable names and values
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 45)
+                                .attr("y", 38)
+                                .text("AI");
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 55)
+                                .attr("y", 38)
+                                .attr("dy", "1.25em")
+                                .text("(" + d3.format(",")(data_val_var2) + ")");
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 183)
+                                .attr("y", 178)
+                                .text("Non-AI");
+                            tooltipSVG.append("text")
+                                .attr("class", "pielabel")
+                                .attr("x", 183)
+                                .attr("y", 178)
+                                .attr("dy", "1.25em")
+                                .text("(" + d3.format(",")(data_val_var3) + ")");
+                            // Display tooltip for selected point                     
+                            tooltip
+                                .style("display", "block")
+                                .style("top", (d3.event.pageY + vert_pos) + "px")
+                                .style("left", (d3.event.pageX + horiz_pos) + "px");
+                        })
+                        // Remove tooltip and restore point color/size on mouseout 
+                        .on("mouseout", function(d) {
+                            // Restore point color/size
+                            d3.select(this)
+                                .attr("fill", "white")
+                                .attr("r", 3);
+                            // Remove tooltip display
+                            tooltip
+                                .style("display", "none");
+                        });
+                };
+                // Create legend: append circles for each key/color
+                svg.selectAll("legendcircles")
+                    .data(keys)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", 655)
+                    .attr("cy", function(d, i) {
+                        return 252 + i * 25;
+                    })
+                    .attr("r", 7)
+                    .style("fill", function(d) {
+                        return color(d);
+                    });
+                // Create legend: append labels for each key/color
+                svg.selectAll("legendlabels")
+                    .data(keys)
+                    .enter()
+                    .append("text")
+                    .attr("class", "legendlabel")
+                    .attr("x", 670)
+                    .attr("y", function(d, i) {
+                        return 256 + i * 25;
+                    })
+                    .text(function(d) {
+                        return d;
+                    });
+            })
+        }
+    }
+    // Initialize the graphic with the line chart view
+    update("lines")
+    // Run function to update data subset and charts when checkbox is checked/un-checked
+</script>
