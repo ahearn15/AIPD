@@ -1,0 +1,49 @@
+level_one,ai_component,count
+Department of Defense,Evolutionary computation,56
+Department of Defense,AI hardware,987
+Department of Defense,Knowledge processing,1395
+Department of Defense,Machine learning,468
+Department of Defense,Natural language processing,102
+Department of Defense,Planning and control,813
+Department of Defense,Speech,68
+Department of Defense,Vision,722
+Department of Energy,Evolutionary computation,28
+Department of Energy,AI hardware,330
+Department of Energy,Knowledge processing,565
+Department of Energy,Machine learning,168
+Department of Energy,Natural language processing,21
+Department of Energy,Planning and control,388
+Department of Energy,Speech,12
+Department of Energy,Vision,291
+Department of Health and Human Services,Evolutionary computation,61
+Department of Health and Human Services,AI hardware,185
+Department of Health and Human Services,Knowledge processing,1074
+Department of Health and Human Services,Machine learning,651
+Department of Health and Human Services,Natural language processing,12
+Department of Health and Human Services,Planning and control,268
+Department of Health and Human Services,Speech,18
+Department of Health and Human Services,Vision,954
+National Aeronautics and Space Administration,Evolutionary computation,6
+National Aeronautics and Space Administration,AI hardware,71
+National Aeronautics and Space Administration,Knowledge processing,190
+National Aeronautics and Space Administration,Machine learning,59
+National Aeronautics and Space Administration,Natural language processing,5
+National Aeronautics and Space Administration,Planning and control,115
+National Aeronautics and Space Administration,Speech,5
+National Aeronautics and Space Administration,Vision,102
+National Science Foundation,Evolutionary computation,31
+National Science Foundation,AI hardware,311
+National Science Foundation,Knowledge processing,580
+National Science Foundation,Machine learning,192
+National Science Foundation,Natural language processing,35
+National Science Foundation,Planning and control,299
+National Science Foundation,Speech,21
+National Science Foundation,Vision,339
+Other,Evolutionary computation,36
+Other,AI hardware,361
+Other,Knowledge processing,981
+Other,Machine learning,280
+Other,Natural language processing,55
+Other,Planning and control,567
+Other,Speech,50
+Other,Vision,589
