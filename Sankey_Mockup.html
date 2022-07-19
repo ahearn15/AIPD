@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html>
+
+<meta charset="utf-8">
+
+<svg width="900" height="50"><text class="title" x="450" y="37">Government interest organizations and AI technology, 1976-2020</text></svg>
+
+<!-- Load d3.js -->
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<!-- Create a div where the graph will take place -->
+
+<div id="titlesvg"></div>
+
+<div id="svg1"></div>
+
+<style type="text/css">
+
+    /* Style checkbox (default) */
+
+    .container input[type="checkbox"] {
+
+        width: 20px;
+
+        height: 20px;
+
+        margin: 0px;
+
+        -webkit-appearance: none;
+
+        -moz-appearance: none;
+
+        -o-appearance: none;
+
+        appearance: none;
+
+        outline: 2.5px solid #f1d660;
+
+        border-radius: 1px;
+
+        font-size: 1em;
+
+        vertical-align: text-bottom;
+
+        line-height: 1em;
+
+        background: transparent;
+
+    }
+
+    /* Style checkbox (while checked) */
+
+    input[type='checkbox']:checked:after {
+
+        content: '\2713';
+
+        color: black;
+
+        position: absolute;
+
+        line-height: 1rem;
+
+        font-size: 2rem;
+
+    }
+
+    /* Style buttons (default) */
+
+    .container button {
+
+        appearance: none;
+
+        border: 1;
+
+        border-radius: 5px;
+
+        background: #f1d660;
+
+        border-color: #f1d660;
+
+        color: black;
+
+        padding: 4px;
+
+        font-size: 14px;
+
+        font-family: "Tinos", serif;
+
+    }
+
+    /* Style buttons (during click) */
+
+    .container button:active {
+
+        background: #fbf6db;
+
+        color: black;
+
+        border-color: #f1d660;
+
+    }
+
+    /* Style light grey vertical grid lines for line chart */
+
+    .grid line {
+
+        stroke: lightgrey;
+
+        stroke-opacity: 0.7;
+
+        shape-rendering: crispEdges;
+
+    }
+
+    /* Get rid of outer grid border for line chart */
+
+    .grid path {
+
+        stroke-width: 0;
+
+    }
+
+    /* Style tooltip */
+
+    .toolTip {
+
+        position: absolute;
+
+        background: #ffffff;
+
+        border: 1px solid #000000;
+
+        border-radius: 10px;
+
+        padding: 5px;
+
+        text-align: center;
+
+        font-family: "Tinos", serif;
+
+        display: none;
+
+    }
+
+    /* Style axis text */
+
+    .axis text {
+
+        font-family: "Tinos", serif;
+
+        fill: black;
+
+        vertical-align: center;
+
+        font-size: 12px;
+
+    }
+
+    /* General style attributes for all text labels */
+
+    .text {
+
+        font-family: "Tinos", serif;
+
+        fill: black;
+
+        vertical-align: center;
+
+    }
+
+    /* Style pie slice text */
+
+    .slicelabel {
+
+        font-size: 14px;
+
+        text-anchor: middle;
+
+    }
+
+    /* Style pie chart text */
+
+    .pielabel {
+
+        text-anchor: end;
+
+    }
+
+    /* Style legend labels */
+
+    .legendlabel {
+
+        font-size: 14px;
+
+        text-anchor: left;
+
+    }
+
+    /* Style axis titles */
+
+    .axislabel {
+
+        font-size: 18px;
+
+        text-anchor: middle;
+
+    }
+
+    /* Style title text */
+
+    .title {
+
+        font-size: 24px;
+
+        text-anchor: middle;
+
+    }
+
+</style>
+<div id="observablehq-chart-aa64254c"></div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@ahearn15/sankey-diagram-w-highlighting.js?v=3";
+new Runtime().module(define, name => {
+  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-aa64254c"));
+});
+</script>
+
+<h2>AI Definitions</h2>
+<strong>Knowledge processing: </strong> The field of knowledge processing involves representing and deriving facts about the world and using this information in automated systems <br><br>
+
+
+<strong>Speech:  </strong>Speech recognition includes techniques to understand a sequence of words given an acoustic signal. <br><br>
+
+<strong>AI hardware:  </strong>Modern AI algorithms require considerable computing power. AI hardware includes physical computer components designed to meet this requirement through increased processing efficiency and/or speed. <br><br>
+
+<strong>Evolutionary computation:  </strong>Evolutionary computation contains a set of computational routines using aspects of nature and, specifically, evolution. <br><br>
+
+
+<strong>Natural language processing:  </strong>Understanding and using data encoded in written language is the domain of natural language processing. <br><br>
+
+<strong>Machine learning:  </strong>The field of machine learning contains a broad class of computational models that learn from data. <br><br>
+
+<strong>Vision:  </strong>Computer vision extracts and understands information from images and videos. <br><br>
+
+<strong>Planning and control:  </strong>Planning and control contains processes to identify, create, and execute activities to achieve specified goals.<br><br>
+
+<strong>Speech:  </strong>Speech recognition includes techniques to understand a sequence of words given an acoustic signal. <br><br>
+
