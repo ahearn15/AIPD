@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<div id="observablehq-chart-b9459a0c"></div>
+<script type="module">
+import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
+import define from "https://api.observablehq.com/@ahearn15/sankey-diagram-w-highlighting.js?v=3";
+new Runtime().module(define, name => {
+  if (name === "chart") return new Inspector(document.querySelector("#observablehq-chart-b9459a0c"));
+});
+</script>
+</html>
